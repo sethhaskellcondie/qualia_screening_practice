@@ -1,0 +1,68 @@
+<div>
+  <div>
+    <h1>Tasks Project</h1>
+  </div>
+
+  @if (!showForm) {
+    <div>
+      <h1>My Tasks</h1>
+      <span>Incomplete: {{ incompleteCount }}</span>
+      |
+      <span>Complete: {{ completeCount }}</span>
+      |
+      <button (click)="onAddTask()">Create Task</button>
+      <hr />
+    </div>
+
+    @if (hasTasks) {
+      <app-filter-bar
+        [availableTags]="availableTags"
+        (filterChanged)="onFilterChanged($event)">
+      </app-filter-bar>
+      <hr />
+
+      <div>
+        @for (task of tasks | filterTasks: selectedTags; track task.id) {
+          <div>
+            @if (editingTaskId === task.id) {
+              <form [formGroup]="editForm" (ngSubmit)="onSave(task.id)">
+                <input type="text" formControlName="title" />
+                @if (editForm.get('title')?.invalid && editForm.get('title')?.touched) {
+                  <p>Title is required</p>
+                }
+                <input type="text" formControlName="tags" />
+                @if (editForm.get('tags')?.invalid && editForm.get('tags')?.touched) {
+                  <p>Tags are required</p>
+                }
+                <label>
+                  <input type="checkbox" formControlName="completed" />
+                  Completed
+                </label>
+                <button type="submit">Save</button>
+                <button type="button" (click)="onCancelEdit()">Cancel</button>
+              </form>
+            } @else {
+              <span>{{task.title}}</span>
+              |
+              <span>{{task.completed ? 'Complete' : 'Incomplete' }}</span>
+              |
+              <span>{{task.tags.join(', ')}}</span>
+              |
+              <button (click)="onEdit(task)">Edit</button>
+              <button (click)="onDelete(task.id)">Delete</button>
+            }
+          </div>
+        }
+      </div>
+    } @else {
+      <div>
+        <p>Create your first task by clicking the create button</p>
+      </div>
+    }
+  } @else {
+    <app-task-form
+      (cancel)="onCancel()"
+      (taskCreated)="onTaskCreated()">
+    </app-task-form>
+  }
+</div>
