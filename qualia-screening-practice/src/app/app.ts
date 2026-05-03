@@ -1,16 +1,24 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Component, signal, ViewChild} from '@angular/core';
+import {TemperatureDisplay} from './temperature-display/temperature-display';
+import {TemperatureService} from './temperature-service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [TemperatureDisplay],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
-  protected message = signal('Hello Qualia');
+  @ViewChild('temp1') temp1!: TemperatureDisplay;
+  @ViewChild('temp2') temp2!: TemperatureDisplay;
+  @ViewChild('temp3') temp3!: TemperatureDisplay;
 
-  updateMessage() {
-    this.message.set('This is Seth Condie');
+  constructor(private service: TemperatureService) {}
+
+  reset() {
+    this.service.reset();
+    this.temp1.reset();
+    this.temp2.reset();
+    this.temp3.reset();
   }
 }

@@ -1,0 +1,11 @@
+<div>
+  <h2>{{title}}</h2>
+  <p>{{description}}</p>
+  <input type="text" [value]="value ?? ''" (input)="onInput($event)">
+  @if (showError) {
+    <p>Input should only include numbers</p>
+  }
+  @if(showWarning) {
+    <p>{{warning}}</p>
+  }
+</div>

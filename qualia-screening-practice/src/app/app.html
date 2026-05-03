@@ -1,6 +1,27 @@
 <main>
-  <h1>{{ message() }}</h1>
-  <button (click)="updateMessage()">Click me</button>
-</main>
+  <app-temperature-display
+    #temp1
+    title="Fahrenheit"
+    description="Used in the U.S."
+    warning="Temp is below absolute zero!"
+    scale="fahrenheit"
+  ></app-temperature-display>
 
-<router-outlet />
+  <app-temperature-display
+    #temp2
+    title="Celsius"
+    description="Used in most of the world"
+    warning="Temp is below absolute zero!"
+    scale="celsius"
+  ></app-temperature-display>
+
+  <app-temperature-display
+    #temp3
+    title="Kelvin"
+    description="Used in scientific contexts."
+    warning="Temp is below absolute zero!"
+    scale="kelvin"
+  ></app-temperature-display>
+
+  <button (click)="reset()">Reset</button>
+</main>
