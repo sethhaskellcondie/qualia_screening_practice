@@ -1,0 +1,77 @@
+<div>
+  <div>
+    <label>Category</label>
+    @for (cat of categories; track cat) {
+      <span>
+        <input
+          type="radio"
+          [id]="'filter-' + cat"
+          [value]="cat"
+          name="filterCategory"
+          [(ngModel)]="filterCategory"
+          (ngModelChange)="applyFilters()"
+        />
+        <label [for]="'filter-' + cat">{{ cat }}</label>
+      </span>
+    }
+  </div>
+
+  <div>
+    <label for="startDate">From</label>
+    <input
+      id="startDate"
+      type="date"
+      [(ngModel)]="filterStartDate"
+      (ngModelChange)="applyFilters()"
+    />
+
+    <label for="endDate">To</label>
+    <input
+      id="endDate"
+      type="date"
+      [(ngModel)]="filterEndDate"
+      (ngModelChange)="applyFilters()"
+    />
+  </div>
+
+  @if (hasActiveFilters) {
+    <button type="button" (click)="clearFilters()">Clear Filters</button>
+  }
+</div>
+
+@if (expenses.length === 0) {
+  <p>Create an expense to get started</p>
+} @else {
+  <table>
+    <thead>
+    <tr>
+      <th>Description</th>
+      <th>Amount</th>
+      <th>Category</th>
+      <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (expense of expenses; track expense.id) {
+        <tr>
+          <td>{{ expense.description }}</td>
+          <td>{{ expense.amount | currency }}</td>
+          <td>{{ expense.category }}</td>
+          <td>{{ expense.date | date: 'mediumDate' }}</td>
+          <td>
+            <button type="button" (click)="delete(expense.id)">Delete</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>Total</td>
+        <td>{{ runningTotal | currency }}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+}

@@ -1,9 +1,13 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {NewExpenseForm} from './new-expense-form/new-expense-form';
+import {ExpenseListComponent} from './expense-list/expense-list';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [
+    NewExpenseForm,
+    ExpenseListComponent
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
