@@ -1,6 +1,35 @@
 <main>
-  <h1>{{ message() }}</h1>
-  <button (click)="updateMessage()">Click me</button>
-</main>
+  <h1>Tip Calculator</h1>
 
-<router-outlet />
+  <label>Bill Amount</label>
+  <input type="number" [(ngModel)]="billAmount" placeholder="0.00" />
+
+  <label>Tip %</label>
+  <input type="number" [(ngModel)]="tipPercent" placeholder="0" />
+  <div style="display: flex; gap: 8px">
+    <button (click)="setTip(10)">10%</button>
+    <button (click)="setTip(15)">15%</button>
+    <button (click)="setTip(20)">20%</button>
+    <button (click)="setTip(25)">25%</button>
+    <button (click)="setTip(30)">30%</button>
+  </div>
+
+  <label>Number of People</label>
+  <input type="number" [(ngModel)]="numberOfPeople" placeholder="1, 2, etc." />
+
+  @if (hasError) {
+    <p>Please enter a valid bill amount and tip percentage (0-100), and number of people to split the bill.</p>
+  } @else {
+    <div>
+      <h2>Total</h2>
+      <p>Tip: {{ tipAmount | currency }}</p>
+      <p>Total: {{totalAmount | currency }}</p>
+
+      <h2>Per Person</h2>
+      <p>Tip: {{ tipPerPerson | currency }}</p>
+      <p>Bill: {{totalPerPerson | currency }}</p>
+    </div>
+  }
+
+  <button (click)="reset()">Reset</button>
+</main>
