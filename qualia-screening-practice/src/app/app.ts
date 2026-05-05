@@ -1,16 +1,28 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {QuestionComponent} from './components/question/question';
+import {QuestionService} from './services/question';
+import {ResultsComponent} from './components/results/results';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [
+    QuestionComponent,
+    ResultsComponent
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
-  protected message = signal('Hello Qualia');
+  quizComplete: boolean = false;
 
-  updateMessage() {
-    this.message.set('This is Seth Condie');
+  constructor(private questionService: QuestionService) {}
+
+  onQuizComplete(): void {
+    this.quizComplete = true;
+  }
+
+  onRestart(): void {
+    this.quizComplete = false;
+    this.questionService.reset();
   }
 }

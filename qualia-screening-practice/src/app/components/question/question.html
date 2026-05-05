@@ -1,0 +1,28 @@
+@if (currentQuestion) {
+  <p>Question {{ currentIndex + 1 }} of {{ totalQuestions }}</p>
+
+  @if (score) {
+    <p>Score: {{ score.correct }} / {{ score.total }}</p>
+  }
+
+  <h2> {{ currentQuestion.text }}</h2>
+
+  <ul>
+    @for (answer of currentAnswers; track answer) {
+      <li>
+        <button
+        (click)="selectAnswer(answer)"
+        [disabled]="selectedAnswer !== undefined"
+        [class.correct]="selectedAnswer && isCorrect(answer)"
+        [class.wrong]="selectedAnswer && isWrong(answer)"
+        >{{ answer }}</button>
+      </li>
+    }
+  </ul>
+
+  @if(selectedAnswer) {
+    <button (click)="nextQuestion()">
+      {{ isLastQuestion ? 'See Results' : 'Next Question' }}
+    </button>
+  }
+}

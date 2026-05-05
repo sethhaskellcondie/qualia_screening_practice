@@ -1,0 +1,5 @@
+@if(score) {
+  <h2>Quiz Complete!</h2>
+  <p>You got {{ score.correct }} out of {{ totalQuestions }} correct!</p>
+  <button (click)="onRestart()">Restart</button>
+}

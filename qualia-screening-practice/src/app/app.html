@@ -1,6 +1,7 @@
 <main>
-  <h1>{{ message() }}</h1>
-  <button (click)="updateMessage()">Click me</button>
+  @if (quizComplete) {
+    <app-results (restart)="onRestart()"></app-results>
+  } @else {
+    <app-question (quizComplete)="onQuizComplete()"></app-question>
+  }
 </main>
-
-<router-outlet />
